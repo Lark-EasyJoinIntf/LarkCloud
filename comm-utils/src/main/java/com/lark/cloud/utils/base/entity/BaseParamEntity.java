@@ -3,7 +3,7 @@ package com.lark.cloud.utils.base.entity;
 import lombok.Data;
 
 @Data
-public class BaseEntity<E> {
+public class BaseParamEntity<E> {
     private String token;
-    private E data;
+    private E param;
 }
