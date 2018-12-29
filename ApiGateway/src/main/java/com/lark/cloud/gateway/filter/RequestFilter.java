@@ -7,7 +7,6 @@ import com.lark.cloud.utils.base.entity.Status;
 import com.lark.cloud.utils.jwt.JWTTokenUtil;
 import com.lark.cloud.utils.limit.TokenValidUtil;
 import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.ZuulFilterResult;
 import com.netflix.zuul.context.RequestContext;
 import io.micrometer.core.instrument.util.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,10 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 网关请求权限过滤器，放行路径/vip/*，用于用户登录注册
