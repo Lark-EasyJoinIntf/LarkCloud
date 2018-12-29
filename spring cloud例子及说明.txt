@@ -43,5 +43,13 @@ https://github.com/117561271下的LarkCloud工程为可以在开发中实际使�
 4.4去git修改配置文件的版本号，然后请求http://localhost:9001/actuator/bus-refresh，再请求http://localhost:9001/hi 和 http://localhost:9002/hi 看版本号是否更新了
 	
 	
-	
-	
+开发规范
+comm-utils工程
+1.状态值都定义在com.lark.cloud.utils.entity的Status下，或分模块定义
+2.POST方式请求的 @RequestBody 参数统一为com.lark.cloud.utils.entity的BaseParamEntity
+  例：@PostMapping(value = "/sethi")
+        public Result<UserInfo> setHi(@RequestBody BaseParamEntity<UserInfo> user) {
+            return schedualServiceHi.setHiFromClientOne( user.getParam() );
+        }
+3.统一返回com.lark.cloud.utils.entity的Result<?>
+4.分页统一返回Result<Page<?>>
