@@ -146,7 +146,7 @@ public class RequestFilter extends ZuulFilter {
                     status = Status.LIMIT_USER_NOT_LOGIN;
                 }else if(!user.containsKey(ACCOUNT_KEY) || StringUtils.isEmpty(user.getString(ACCOUNT_KEY))){
                     status = Status.LIMIT_USER_LOST_ACCOUNT_ATTR;
-                }else if(!TokenValidUtil.getInstance().isLogin(user.getString(ACCOUNT_KEY))){
+                }else if(!TokenValidUtil.getInstance().isLogin(user.getString(ACCOUNT_KEY), token)){
                     status = Status.LIMIT_USER_INVALID;
                 }
             } else {

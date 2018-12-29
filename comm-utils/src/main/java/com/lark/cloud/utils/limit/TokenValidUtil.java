@@ -12,7 +12,12 @@ public class TokenValidUtil {
         return instance;
     }
 
-    public boolean isLogin(String key){
+    /**
+     * 该方法需要调用权限服务提供的token验证接口
+     * @param key
+     * @return
+     */
+    public boolean isLogin(String key, String token){
         return true;
     }
 }
