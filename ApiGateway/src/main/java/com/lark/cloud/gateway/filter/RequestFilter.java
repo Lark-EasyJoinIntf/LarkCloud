@@ -113,7 +113,7 @@ public class RequestFilter extends ZuulFilter {
     }
 
     private static String TOKEN_KEY = "token";
-    private static String ACCOUNT_KEY = AppPropUtil.get("lark.user.attr.account");
+    private static String ACCOUNT_KEY = AppPropUtil.get("lark.user.attr.keyname");
     /**
      * run：过滤器的具体逻辑。可用很复杂，包括查sql，nosql去判断该请求到底有没有权限访问。
      * @return

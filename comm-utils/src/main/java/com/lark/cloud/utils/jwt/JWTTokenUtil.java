@@ -13,6 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * JWT token生成帮助类
@@ -114,6 +115,7 @@ public class JWTTokenUtil {
 
 	public static void main(String[] args) {
 		JSONObject user = new JSONObject();
+		user.put("sessionid", UUID.randomUUID().toString());
 		user.put("account", "1803150620");
 		user.put("name", "Smle.Le");
 		String jwt = JWTTokenUtil.getInstance().createJWTToken(user, 30*60*1000);

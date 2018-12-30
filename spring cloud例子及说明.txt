@@ -26,11 +26,11 @@ https://github.com/117561271下的LarkCloud工程为可以在开发中实际使�
 	分页查询：http://localhost:8080/api/admin/getUserForPage
 	POST方式，JSON格式，入参格式：{"token":"", "param":{"pageSize":20, "currPage":1}}  后端对应接收对象BaseParamEntity
 	
-	TOKEN通过jwt生成，需要提供用户登录接口生成返回该token，对于用户的帐号字段默认为account，可以在application.properties里通过以下属性配置相关信息
+	TOKEN通过jwt生成，需要提供用户登录接口生成返回该token，对于用户的帐号字段默认为sessionid，可以在application.properties里通过以下属性配置相关信息
 		##JWT Token密码，正式服务请修改该密码
 		lark.jwt.secret=123456
 		##登录用户信息需要包含的帐号属性
-		lark.user.attr.account=account
+		lark.user.attr.keyname=sessionid
 	测试时可以通过运行comm-utils包下JWTTokenUtil的main方法生成
 	
 	
