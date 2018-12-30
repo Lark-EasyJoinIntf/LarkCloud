@@ -7,7 +7,7 @@ Lark-EasyJoinIntf/lark/LarkClond下为研究例子：
 
 
 https://github.com/117561271下的LarkCloud工程为可以在开发中实际使用的工程：
-1.ApiGateway为zuul网关工程
+1.ApiGateway为zuul网关工程，网关路径配置/api-xxx/**
 2.comm-utils为规范化的通用类及工具
 3.ConfigCenter为配置中心
 4.RegistCenter为注册中心
@@ -17,13 +17,13 @@ https://github.com/117561271下的LarkCloud工程为可以在开发中实际使�
 1.启动Lark-EasyJoinIntf/lark/LarkClond下的eurekaserver、eurekaclient2、feign工程
 2.启动ApiGateway工程
 3.测试网关路由、权限token、标准入参及标准返回	
-	GET请求：http://localhost:8080/api/admin/hi?name=lark    
+	GET请求：http://localhost:8080/api-admin/hi?name=lark
 	返回{"message":"[token]参数缺失或为空","status":-1001} //需要token参数
 
-	一般的POST请求：http://localhost:8080/api/admin/sethi   
+	一般的POST请求：http://localhost:8080/api-admin/sethi
 	参数{"token":"", "param":{"name":"lark","sex":"M"}}}    后端对应接收对象BaseParamEntity
 
-	分页查询：http://localhost:8080/api/admin/getUserForPage
+	分页查询：http://localhost:8080/api-admin/getUserForPage
 	POST方式，JSON格式，入参格式：{"token":"", "param":{"pageSize":20, "currPage":1}}  后端对应接收对象BaseParamEntity
 	
 	TOKEN通过jwt生成，需要提供用户登录接口生成返回该token，对于用户的帐号字段默认为sessionid，可以在application.properties里通过以下属性配置相关信息

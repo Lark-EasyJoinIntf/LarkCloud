@@ -12,7 +12,7 @@ spring:
 zuul:
   routes:
     api-a:
-      path: /api/admin/**
+      path: /api-admin/**
       serviceId: service-admin
     api-b:
       path: /api-b/**

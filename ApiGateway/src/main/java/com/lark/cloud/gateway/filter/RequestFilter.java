@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,11 +54,11 @@ public class RequestFilter extends ZuulFilter {
         put("a","b");
         put("a","b");
     }};*/
-    /*List<String> noFilterList = new ArrayList<String>(){{
-        add("/login/*");
-    }};*/
+    List<String> noFilterList = new ArrayList<String>(){{
+        add("/vip/*");
+    }};
 
-    private String noFilterList = "/vip/*";
+    //private String noFilterList = "../vip/*";
     /**
      * shouldFilter：这里可以写逻辑判断，是否要过滤，本文true,永远过滤。
      * @return
@@ -72,7 +73,7 @@ public class RequestFilter extends ZuulFilter {
         }
         return true;
     }
-    private boolean checkUri(String urlList, String uri){
+    /*private boolean checkUri(String urlList, String uri){
         if(urlList.contains(uri)){
             return true;
         }
@@ -90,7 +91,7 @@ public class RequestFilter extends ZuulFilter {
             }
         }
         return pass;
-    }
+    }*/
 
     private boolean checkUri(List<String> urlList, String uri){
         if(urlList.contains(uri)){
@@ -100,11 +101,16 @@ public class RequestFilter extends ZuulFilter {
         StringBuffer ub = new StringBuffer(128);
         ub.append("/");
         String[] uriArr = uri.split("/");
+        int i = 0;
         for(String ur : uriArr){
-            if("".equals(ur.trim()))
+            if(i < 2){//从第3个值开始
+                i++;
                 continue;
-            ub.append(ur).append("/");
-            if(urlList.contains(ub.toString()+"*")){
+            }
+
+            ub.append(ur);
+            //包含 /xxx或/xxx/*都放行
+            if(urlList.contains(ub.toString()) || urlList.contains(ub.toString()+"/*")){
                 pass = true;
                 break;
             }
