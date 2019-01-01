@@ -1,16 +1,14 @@
 package com.lark.cloud.utils.limit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
+
+@Component
 public class TokenValidUtil {
-    private static TokenValidUtil instance;
 
-    private TokenValidUtil(){}
-
-    public static TokenValidUtil getInstance(){
-        if(instance == null){
-            instance = new TokenValidUtil();
-        }
-        return instance;
-    }
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 该方法需要调用权限服务提供的token验证接口
@@ -18,6 +16,10 @@ public class TokenValidUtil {
      * @return
      */
     public boolean isLogin(String key, String token){
-        return true;
+        Object val = redisTemplate.opsForValue().get(key);
+        if(token.equals(val))
+            return true;
+        else
+            return false;
     }
 }

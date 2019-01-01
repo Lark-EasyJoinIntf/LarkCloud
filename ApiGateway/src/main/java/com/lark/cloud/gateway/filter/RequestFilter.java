@@ -12,6 +12,7 @@ import io.micrometer.core.instrument.util.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletInputStream;
@@ -27,6 +28,8 @@ import java.util.List;
 public class RequestFilter extends ZuulFilter {
     private static Logger log = LoggerFactory.getLogger(RequestFilter.class);
 
+    @Autowired
+    private TokenValidUtil tokenValidUtil;
     /**
      * filterType：返回一个字符串代表过滤器的类型，在zuul中定义了四种不同生命周期的过滤器类型，具体如下：
      pre：路由之前
@@ -73,25 +76,6 @@ public class RequestFilter extends ZuulFilter {
         }
         return true;
     }
-    /*private boolean checkUri(String urlList, String uri){
-        if(urlList.contains(uri)){
-            return true;
-        }
-        boolean pass = false;
-        StringBuffer ub = new StringBuffer(64);
-        String[] uriArr = uri.split("/");
-        for(String ur : uriArr){
-            if("".equals(ur.trim()))
-                continue;
-            ub.setLength(0);
-            ub.append("/").append(ur).append("/");
-            if(urlList.contains(ub.toString()) || urlList.contains(ub.toString()+"*")){
-                pass = true;
-                break;
-            }
-        }
-        return pass;
-    }*/
 
     private boolean checkUri(List<String> urlList, String uri){
         if(urlList.contains(uri)){
@@ -152,7 +136,7 @@ public class RequestFilter extends ZuulFilter {
                     status = Status.LIMIT_USER_NOT_LOGIN;
                 }else if(!user.containsKey(ACCOUNT_KEY) || StringUtils.isEmpty(user.getString(ACCOUNT_KEY))){
                     status = Status.LIMIT_USER_LOST_ACCOUNT_ATTR;
-                }else if(!TokenValidUtil.getInstance().isLogin(user.getString(ACCOUNT_KEY), token)){
+                }else if(tokenValidUtil.isLogin(user.getString(ACCOUNT_KEY), token)){
                     status = Status.LIMIT_USER_INVALID;
                 }
             } else {
