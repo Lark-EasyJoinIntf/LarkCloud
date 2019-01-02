@@ -7,6 +7,11 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Application属性文件加载类
+ * @date 2018-12
+ * @author xc.li
+ */
 public class AppPropUtil {
 
     private static final String UNDEFINED = "";

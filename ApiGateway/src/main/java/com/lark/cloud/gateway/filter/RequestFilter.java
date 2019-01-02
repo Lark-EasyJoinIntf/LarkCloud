@@ -24,6 +24,8 @@ import java.util.List;
 /**
  * 网关请求权限过滤器，放行路径/vip/*，用于用户登录注册
  * sessionid的值为登录信息的 手机号码:随机值
+ * @date 2018-12
+ * @author xc.li
  */
 @Component
 public class RequestFilter extends ZuulFilter {
@@ -62,7 +64,6 @@ public class RequestFilter extends ZuulFilter {
         add("/vip/*");
     }};
 
-    //private String noFilterList = "../vip/*";
     /**
      * shouldFilter：这里可以写逻辑判断，是否要过滤，本文true,永远过滤。
      * @return

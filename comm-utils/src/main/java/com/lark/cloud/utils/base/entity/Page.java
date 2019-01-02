@@ -4,6 +4,11 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * 分页返回对象定义
+ * @date 2018-12
+ * @author xc.li
+ */
 @Data
 public class Page<R> {
     private int totalCount;

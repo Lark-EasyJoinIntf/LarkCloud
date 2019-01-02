@@ -1,8 +1,11 @@
 package com.lark.cloud.utils.base.entity;
 
+
 /**
  * 统一结果对象
  * @param <R>
+ * @date 2018-12
+ * @author xc.li
  */
 public class Result<R> {
 

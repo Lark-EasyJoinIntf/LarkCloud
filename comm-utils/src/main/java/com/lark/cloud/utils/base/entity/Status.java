@@ -4,6 +4,8 @@ import com.lark.cloud.utils.AppPropUtil;
 
 /**
  * 系统状态定义
+ * @date 2018-12
+ * @author xc.li
  */
 public enum Status {
 
