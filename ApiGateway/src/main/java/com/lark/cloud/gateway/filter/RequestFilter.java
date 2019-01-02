@@ -5,7 +5,7 @@ import com.lark.cloud.utils.AppPropUtil;
 import com.lark.cloud.utils.base.entity.Result;
 import com.lark.cloud.utils.base.entity.Status;
 import com.lark.cloud.utils.jwt.JWTTokenUtil;
-import com.lark.cloud.utils.limit.TokenValidUtil;
+import com.lark.cloud.utils.limit.LimitUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import io.micrometer.core.instrument.util.IOUtils;
@@ -23,13 +23,14 @@ import java.util.List;
 
 /**
  * 网关请求权限过滤器，放行路径/vip/*，用于用户登录注册
+ * sessionid的值为登录信息的 手机号码:随机值
  */
 @Component
 public class RequestFilter extends ZuulFilter {
     private static Logger log = LoggerFactory.getLogger(RequestFilter.class);
 
     @Autowired
-    private TokenValidUtil tokenValidUtil;
+    private LimitUtil limitUtil;
     /**
      * filterType：返回一个字符串代表过滤器的类型，在zuul中定义了四种不同生命周期的过滤器类型，具体如下：
      pre：路由之前
@@ -136,7 +137,7 @@ public class RequestFilter extends ZuulFilter {
                     status = Status.LIMIT_USER_NOT_LOGIN;
                 }else if(!user.containsKey(ACCOUNT_KEY) || StringUtils.isEmpty(user.getString(ACCOUNT_KEY))){
                     status = Status.LIMIT_USER_LOST_ACCOUNT_ATTR;
-                }else if(tokenValidUtil.isLogin(user.getString(ACCOUNT_KEY), token)){
+                }else if(!limitUtil.isLogin(user.getString(ACCOUNT_KEY), token)){//ACCOUNT_KEY的值为登录信息的 手机号码:随机值
                     status = Status.LIMIT_USER_INVALID;
                 }
             } else {
