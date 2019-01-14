@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 网关请求权限过滤器，放行路径/vip/*，用于用户登录注册
+ * 网关请求权限过滤器，放行路径/vip/* -用于用户登录注册
  * sessionid的值为登录信息的 手机号码:随机值
  * @date 2018-12
  * @author xc.li
@@ -73,39 +73,12 @@ public class RequestFilter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String uri = request.getRequestURI();
-        if(uri != null && checkUri(noFilterList, uri)){
+        if(uri != null && LimitUtil.checkUri(noFilterList, uri)){
             return false;
         }
         return true;
     }
 
-    private boolean checkUri(List<String> urlList, String uri){
-        if(urlList.contains(uri)){
-            return true;
-        }
-        boolean pass = false;
-        StringBuffer ub = new StringBuffer(128);
-        ub.append("/");
-        String[] uriArr = uri.split("/");
-        int i = 0;
-        for(String ur : uriArr){
-            if(i < 2){//从第3个值开始
-                i++;
-                continue;
-            }
-
-            ub.append(ur);
-            //包含 /xxx或/xxx/*都放行
-            if(urlList.contains(ub.toString()) || urlList.contains(ub.toString()+"/*")){
-                pass = true;
-                break;
-            }
-        }
-        return pass;
-    }
-
-    private static String TOKEN_KEY = "token";
-    private static String ACCOUNT_KEY = AppPropUtil.get("lark.user.attr.keyname");
     /**
      * run：过滤器的具体逻辑。可用很复杂，包括查sql，nosql去判断该请求到底有没有权限访问。
      * @return
@@ -122,28 +95,17 @@ public class RequestFilter extends ZuulFilter {
             if (hasBody(request.getMethod())) {
                 if (!ctx.isChunkedRequestBody()) {
                     JSONObject params = getBody(request);
-                    if (params.containsKey(TOKEN_KEY)) {
-                        token = params.getString(TOKEN_KEY);
+                    if (params.containsKey(LimitUtil.TOKEN_KEY)) {
+                        token = params.getString(LimitUtil.TOKEN_KEY);
                     } else {
                         status = Status.LIMIT_TOKEN_MISS;
                     }
                 }
             } else {
-                token = request.getParameter(TOKEN_KEY);
+                token = request.getParameter(LimitUtil.TOKEN_KEY);
             }
-            //解码token，验证是否登录及存在
-            if (StringUtils.isNotEmpty(token)) {
-                JSONObject user = JWTTokenUtil.getInstance().getUserInfo(token);
-                if(user == null){
-                    status = Status.LIMIT_USER_NOT_LOGIN;
-                }else if(!user.containsKey(ACCOUNT_KEY) || StringUtils.isEmpty(user.getString(ACCOUNT_KEY))){
-                    status = Status.LIMIT_USER_LOST_ACCOUNT_ATTR;
-                }else if(!limitUtil.isLogin(user.getString(ACCOUNT_KEY), token)){//ACCOUNT_KEY的值为登录信息的 手机号码:随机值
-                    status = Status.LIMIT_USER_INVALID;
-                }
-            } else {
-                status = Status.LIMIT_TOKEN_MISS;
-            }
+            status = limitUtil.checkToken(token);
+
             if(status.getStatus() < 0) {
                 ctx.setSendZuulResponse(false);
                 ctx.setResponseStatusCode(401);

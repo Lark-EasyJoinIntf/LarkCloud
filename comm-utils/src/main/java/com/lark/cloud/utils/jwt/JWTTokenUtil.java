@@ -1,6 +1,5 @@
 package com.lark.cloud.utils.jwt;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lark.cloud.utils.AppPropUtil;
 import io.jsonwebtoken.Claims;

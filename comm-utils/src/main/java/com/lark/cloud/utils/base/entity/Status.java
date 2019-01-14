@@ -7,7 +7,7 @@ import com.lark.cloud.utils.AppPropUtil;
  * @date 2018-12
  * @author xc.li
  */
-public enum Status {
+public enum Status{
 
     SUCCESS(0, "请求成功"),
     EXC(-1, "系统异常"),
