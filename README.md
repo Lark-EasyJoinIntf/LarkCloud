@@ -58,12 +58,12 @@ https://github.com/117561271下的LarkCloud工程为可以在开发中实际使�
 	
 开发规范
 comm-utils工程
-#1.状态值都定义在com.lark.cloud.utils.entity的Status下，或分模块定义
-#2.POST方式请求的 @RequestBody 参数统一为com.lark.cloud.utils.entity的BaseParamEntity
-##  例：@PostMapping(value = "/sethi")
-##        public Result<UserInfo> setHi(@RequestBody BaseParamEntity<UserInfo> user) {
-##            return schedualServiceHi.setHiFromClientOne( user.getParam() );
-##        }
-##  备注：放行请求以实体作为入参，区别于带token的请求，例如登录接口
-##3.统一返回com.lark.cloud.utils.entity的Result<?>
-##4.分页统一返回Result<Page<?>>
+- 1.状态值都定义在com.lark.cloud.utils.entity的Status下，或分模块定义
+- 2.POST方式请求的 @RequestBody 参数统一为com.lark.cloud.utils.entity的BaseParamEntity
+	例：@PostMapping(value = "/sethi")
+	        public Result<UserInfo> setHi(@RequestBody BaseParamEntity<UserInfo> user) {
+	            return schedualServiceHi.setHiFromClientOne( user.getParam() );
+	       }
+	  备注：放行请求以实体作为入参，区别于带token的请求，例如登录接口
+- 3.统一返回com.lark.cloud.utils.entity的Result<?>
+- 4.分页统一返回Result<Page<?>>
