@@ -50,20 +50,20 @@ https://github.com/117561271下的LarkCloud工程为可以在开发中实际使�
 
 	
 4.测试配置中心
-4.1安装rabbitmq
-4.2启动https://github.com/117561271/LarkCloud下的RegistCenter为注册中心、ConfigCenter为配置中心、ServiceProvider的Client工程
-4.3浏览器请求http://localhost:9001/hi 和 http://localhost:9002/hi 获取到版本号
-4.4去git修改配置文件的版本号，然后请求http://localhost:9001/actuator/bus-refresh，再请求http://localhost:9001/hi 和 http://localhost:9002/hi 看版本号是否更新了
+- 4.1安装rabbitmq
+- 4.2启动https://github.com/117561271/LarkCloud下的RegistCenter为注册中心、ConfigCenter为配置中心、ServiceProvider的Client工程
+- 4.3浏览器请求http://localhost:9001/hi 和 http://localhost:9002/hi 获取到版本号
+- 4.4去git修改配置文件的版本号，然后请求http://localhost:9001/actuator/bus-refresh，再请求http://localhost:9001/hi 和 http://localhost:9002/hi 看版本号是否更新了
 	
 	
 开发规范
 comm-utils工程
 #1.状态值都定义在com.lark.cloud.utils.entity的Status下，或分模块定义
 #2.POST方式请求的 @RequestBody 参数统一为com.lark.cloud.utils.entity的BaseParamEntity
-#  例：@PostMapping(value = "/sethi")
-#        public Result<UserInfo> setHi(@RequestBody BaseParamEntity<UserInfo> user) {
-#            return schedualServiceHi.setHiFromClientOne( user.getParam() );
-#        }
-#  备注：放行请求以实体作为入参，区别于带token的请求，例如登录接口
-#3.统一返回com.lark.cloud.utils.entity的Result<?>
-#4.分页统一返回Result<Page<?>>
+##  例：@PostMapping(value = "/sethi")
+##        public Result<UserInfo> setHi(@RequestBody BaseParamEntity<UserInfo> user) {
+##            return schedualServiceHi.setHiFromClientOne( user.getParam() );
+##        }
+##  备注：放行请求以实体作为入参，区别于带token的请求，例如登录接口
+##3.统一返回com.lark.cloud.utils.entity的Result<?>
+##4.分页统一返回Result<Page<?>>
