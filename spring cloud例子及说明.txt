@@ -26,7 +26,7 @@ https://github.com/117561271下的LarkCloud工程为可以在开发中实际使�
         ##登录用户信息需要包含的帐号属性
 		lark.user.attr.keyname=sessionid
 	用户登录获取TOKEN：http://localhost:8080/api-admin/vip/login
-        参数：{"account":"18073150620", "name":"lark","password":"1128"}
+        参数：{"account":"180****06**", "name":"lark","password":"1128"}
         返回：{"status": 0,
                "message": "请求成功",
                "data": "token value" }
